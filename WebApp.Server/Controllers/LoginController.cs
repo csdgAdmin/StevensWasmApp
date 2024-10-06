@@ -24,13 +24,14 @@ namespace WebApp.Server.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] UserLoginDto loginDto)
         {
-            User user = Authenticate(loginDto);
+            User? user = Authenticate(loginDto);
             if(user != null)
             {
                 var bearerToken = GenerateToken(user);
                 return Ok(bearerToken);
             }
-            return NotFound($"User {loginDto.UserName} was not found");
+            return NotFound($"The User {loginDto.UserName} with the password provided. Was not found.\n" +
+                            $"Ensure that the user exists, and that the password provided is correct.");
         }
 
         /// <summary>
