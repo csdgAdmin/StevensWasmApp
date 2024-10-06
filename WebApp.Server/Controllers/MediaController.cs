@@ -7,4 +7,9 @@ namespace WebApp.Server.Controllers;
 [ApiController]
 public class MediaController : ControllerBase
 {
+    [HttpGet("Public")]
+    public IActionResult Public()
+    {
+        return Ok("You are in the MediaController domain - on public property.");
+    }
 }
