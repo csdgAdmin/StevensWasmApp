@@ -2,8 +2,10 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Server.Models;
-
-public class Media
+/// <summary>
+/// The Media Class
+/// </summary>
+public class MediaModel
 {
     /// <summary>
     /// The title of the song.
@@ -23,7 +25,7 @@ public class Media
     /// <summary>
     /// The metadata related to the song. Initially null.
     /// </summary>
-    public MediaMetaData? SongMetaData { get; set; } = null;
+    public MediaMetaDataModel? SongMetaData { get; set; } = null;
     /// <summary>
     /// Nullable reference to the content related to this media
     /// </summary>
