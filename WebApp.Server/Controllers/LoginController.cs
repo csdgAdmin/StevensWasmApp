@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using WebApp.Server.MockDB;
 using WebApp.Server.Models;
+using WebApp.Shared.Dto;
 
 namespace WebApp.Server.Controllers
 {
@@ -19,7 +20,11 @@ namespace WebApp.Server.Controllers
         {
             _config = config;
         }
-
+        /// <summary>
+        /// Performs the login activity for the caller.
+        /// </summary>
+        /// <param name="loginDto"></param>
+        /// <returns>An http status of OK if successful, Forbidden if unsuccessful.</returns>
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Login([FromBody] UserLoginDto loginDto)

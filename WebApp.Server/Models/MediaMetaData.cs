@@ -1,6 +1,6 @@
 ﻿namespace WebApp.Server.Models;
 
-public class SongMetaData
+public class MediaMetaData
 {
     /// <summary>
     /// Release date, nullable if unreleased.
