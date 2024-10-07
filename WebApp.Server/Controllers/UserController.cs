@@ -41,7 +41,7 @@ public class UserController : ControllerBase
     /// Get a collection of user details for all users.
     /// </summary>
     /// <returns>A list containing details about the all user identity.</returns>
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = "Administrator, PowerUser")]
     [HttpGet("GetAllUserDetails")]
     public List<UserDetailsDto?>? GetAllUserDetails()
     {
