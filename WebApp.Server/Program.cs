@@ -9,8 +9,6 @@ using System.Text;
 IConfiguration config = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                             .Build();
-/* Cors Policy Requirement
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";*/
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,17 +37,6 @@ builder.Services.AddAuthentication(auth =>
     };
 });
 
-/* Cors Policy Requirement
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.AllowAnyOrigin();
-                          //policy.WithOrigins("https://localhost:7173");
-                      });
-});*/
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -75,6 +62,10 @@ app.MapRazorPages();
 app.MapFallbackToFile("index.html");
 app.UseAuthorization();
 
+/* Allow for alot:
+ * Authentication and Authorization and roles
+ * should ultimately protect the resources server side.
+ */
 app.UseCors(cors => cors
 .AllowAnyMethod()
 .AllowAnyHeader()
