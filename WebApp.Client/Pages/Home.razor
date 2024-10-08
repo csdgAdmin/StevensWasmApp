@@ -1,7 +1,34 @@
 ﻿@page "/"
+@using WebApp.Client.Services
 
-<PageTitle>Home</PageTitle>
+<PageTitle>
+    Home
+</PageTitle>
 
 <h1>Hello, world!</h1>
+<p>
+    Username: <input type="text" />
+</p>
+<p>
+    Password: <input type="text" />
+</p>
+<p>
+    <button type="button"
+            @onclick="(()=>Login())">
+        Log In
+    </button>
+</p>
+<p>
+    Bearer: <input type="text" />
+</p>
 
-Welcome to your new app.
+@code{
+    [Inject]
+    public ILoginService LoginService { get; set; }
+    private string _bearerToken = null;
+
+    protected async Task Login()
+    {
+        await LoginService.GetBearer("Login");
+    }
+}

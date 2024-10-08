@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.VisualBasic;
 using System.Text;
 
 /* Add configuration reference for
@@ -8,6 +9,8 @@ using System.Text;
 IConfiguration config = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                             .Build();
+/* Cors Policy Requirement
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";*/
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +39,17 @@ builder.Services.AddAuthentication(auth =>
     };
 });
 
+/* Cors Policy Requirement
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin();
+                          //policy.WithOrigins("https://localhost:7173");
+                      });
+});*/
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -57,13 +71,20 @@ app.UseHttpsRedirection();
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
-app.UseAuthentication();
-app.UseAuthorization();
-
 app.MapRazorPages();
 app.MapFallbackToFile("index.html");
 app.UseAuthorization();
 
+app.UseCors(cors => cors
+.AllowAnyMethod()
+.AllowAnyHeader()
+.SetIsOriginAllowed(origin => true)
+.AllowCredentials());
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
+
 
 app.Run();
