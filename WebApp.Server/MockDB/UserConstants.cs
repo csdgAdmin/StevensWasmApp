@@ -7,34 +7,8 @@ namespace WebApp.Server.MockDB;
 /// </summary>
 public class UserConstants
 {
-    public static List<UserModel> Users = new()
-    {
-        new()
-        {
-            UserName = "UserOne",
-            PassWord = "PasswordOne",
-            EmailAddress = "userOne@someDomain.com",
-            Role = "Administrator",
-            FirstName = "UserOne_FName",
-            LastName = "UserOne_LName"
-        },
-        new()
-        {
-            UserName = "UserTwo",
-            PassWord = "PasswordTwo",
-            EmailAddress = "userTwo@someDomain.com",
-            Role = "PowerUser",
-            FirstName = "UserTwo_FName",
-            LastName = "UserTwo_LName"
-        },
-        new()
-        {
-            UserName = "UserThree",
-            PassWord = "PasswordThree",
-            EmailAddress = "userThree@someDomain.com",
-            Role = "User",
-            FirstName = "UserThree_FName",
-            LastName = "UserThre_LName"
-        }
-    };
+    /// <summary>
+    /// A reference to the Mock User Table file. Only for this test file.
+    /// </summary>
+    public static string MockUserFilePath { get; } = @"\MockDB\MockUserTable.json";
 }

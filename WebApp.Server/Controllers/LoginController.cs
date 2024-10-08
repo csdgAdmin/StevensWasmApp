@@ -5,9 +5,12 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using WebApp.Server.MockDB;
 using WebApp.Server.Models;
+using WebApp.Shared;
 using WebApp.Shared.Dto;
+using System.IO;
 
 namespace WebApp.Server.Controllers;
 
@@ -76,8 +79,14 @@ public class LoginController : ControllerBase
     /// <returns>A user object representing the authenticated individual</returns>
     private UserModel? Authenticate(UserLoginDto loginDto)
     {
-        return UserConstants.Users.FirstOrDefault(user =>
-                                                  loginDto.UserName.ToUpper() == user.UserName.ToUpper()
+        ObjBuilder objBuilder = new();
+        List<UserModel>? userCollection = objBuilder.BuildObjFromJsonFile<List<UserModel>?>($"{Directory.GetCurrentDirectory()}{UserConstants.MockUserFilePath}");
+        if(userCollection != null)
+        {
+            return userCollection.FirstOrDefault(user =>
+                                                 loginDto.UserName.ToUpper() == user.UserName.ToUpper()
                                                   && loginDto.PassWord == user.PassWord);
+        }
+        return null;
     }
 }

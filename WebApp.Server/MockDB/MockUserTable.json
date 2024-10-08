@@ -1,0 +1,26 @@
+[
+  {
+    "UserName": "UserOne",
+    "PassWord": "PassWordOne",
+    "EmailAddress": "userOne@someDomain.com",
+    "Role": "Administrator",
+    "FirstName": "UserOne_FName",
+    "LastName": "UserOne_LName"
+  },
+  {
+    "UserName": "UserTwo",
+    "PassWord": "PassWordTwo",
+    "EmailAddress": "userTwo@someDomain.com",
+    "Role": "PowerUser",
+    "FirstName": "UserTwo_FName",
+    "LastName": "UserTwo_LName"
+  },
+  {
+    "UserName": "UserThree",
+    "PassWord": "PassWordThree",
+    "EmailAddress": "userThree@someDomain.com",
+    "Role": "User",
+    "FirstName": "UserThree_FName",
+    "LastName": "UserThre_LName"
+  }
+]

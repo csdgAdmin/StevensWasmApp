@@ -5,6 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using WebApp.Server.MockDB;
 using WebApp.Server.Models;
+using WebApp.Shared;
 using WebApp.Shared.Dto;
 
 namespace WebApp.Server.Controllers;
@@ -45,7 +46,8 @@ public class UserController : ControllerBase
     [HttpGet("GetAllUserDetails")]
     public List<UserDetailsDto?>? GetAllUserDetails()
     {
-        List<UserModel>? userModels = UserConstants.Users;
+        ObjBuilder objBuilder = new();
+        List<UserModel>? userModels = objBuilder.BuildObjFromJsonFile<List<UserModel>?>($"{Directory.GetCurrentDirectory()}{UserConstants.MockUserFilePath}");
         if(userModels != null && userModels.Count > 0)
         {
             List<UserDetailsDto?> userDetailDtos = new();
