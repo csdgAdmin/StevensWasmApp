@@ -1,7 +1,5 @@
 ﻿@page "/"
-@using static WebApp.Client.Common.ClientConstants;
-@using WebApp.Client.Services
-@using WebApp.Shared.Dto
+
 
 <PageTitle>
     Home
@@ -20,30 +18,4 @@
         Log In
     </button>
 </p>
-<p>
-    Bearer: <input type="text" @bind-value="@_bearerToken" />
-</p>
 
-@code {
-    [Inject]
-    public ILoginService? LoginService { get; set; }
-
-    [Inject]
-    public Blazored.SessionStorage.ISessionStorageService? sessionStorage { get; set; }
-
-    private string? _bearerToken = "Hello";
-
-    private UserLoginDto _userLoginDto = new();
-
-    protected async Task Login()
-    {
-        if (LoginService != null)
-        {
-            if (sessionStorage != null)
-            {
-                this._bearerToken = await LoginService.GetBearer(LoginEndpoint, this._userLoginDto);
-                await sessionStorage.SetItemAsync("bearerToken", this._bearerToken);
-            }
-        }
-    }
-}
