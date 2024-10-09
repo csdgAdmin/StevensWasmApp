@@ -18,8 +18,8 @@ public class UserController : ControllerBase
     /// Get details about the current user's identity.
     /// </summary>
     /// <returns>An object containing details about the current user's identity.</returns>
-    [Authorize]
     [HttpGet("GetMyUserDetails")]
+    [Authorize(Roles = "Administrator")]
     public UserDetailsDto? GetUserDetails()
     {
         UserModel? user = GetCurrentUser();
@@ -42,15 +42,15 @@ public class UserController : ControllerBase
     /// Get a collection of user details for all users.
     /// </summary>
     /// <returns>A list containing details about the all user identity.</returns>
-    [Authorize(Roles = "Administrator, PowerUser")]
-    [HttpGet("GetAllUserDetails")]
-    public List<UserDetailsDto?>? GetAllUserDetails()
+    [Authorize(Roles = "Administrator")]
+    [HttpGet("GetAllUsers")]
+    public List<UserDetailsDto>? GetAllUsers()
     {
         ObjBuilder objBuilder = new();
         List<UserModel>? userModels = objBuilder.BuildObjFromJsonFile<List<UserModel>?>($"{Directory.GetCurrentDirectory()}{UserConstants.MockUserFilePath}");
         if(userModels != null && userModels.Count > 0)
         {
-            List<UserDetailsDto?> userDetailDtos = new();
+            List<UserDetailsDto>? userDetailDtos = new();
             foreach (UserModel userModel in userModels)
             {
                 userDetailDtos.Add(new() {

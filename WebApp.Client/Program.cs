@@ -18,6 +18,9 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddHttpClient<ILoginService, LoginService>(client => {
     client.BaseAddress = new(ClientConstants.DevServerUri);
 });
+builder.Services.AddHttpClient<IUserService, UserService>(client => {
+    client.BaseAddress = new(ClientConstants.DevServerUri);
+});
 
 builder.Services.AddBlazoredSessionStorageAsSingleton();
 

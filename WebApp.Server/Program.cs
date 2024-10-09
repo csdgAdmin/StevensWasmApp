@@ -27,16 +27,17 @@ builder.Services.AddAuthentication(auth =>
 {
     bearer.TokenValidationParameters = new()
     {
-        ValidIssuer = config["JwtSettings:Issuer"],
         ValidateIssuer = true,
-        ValidAudience = config["JwtSettings:Audience"],
         ValidateAudience = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:Key"]!)),
+        ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidateLifetime = true
+        ValidIssuer = config["JwtSettings:Issuer"],
+        ValidAudience = config["JwtSettings:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:Key"]!))
     };
 });
-
+builder.Services.AddMvc();
+builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 

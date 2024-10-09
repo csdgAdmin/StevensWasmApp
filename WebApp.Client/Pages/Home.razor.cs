@@ -14,6 +14,11 @@ namespace WebApp.Client.Pages
         [Inject]
         public ILoginService? LoginService { get; set; }
         /// <summary>
+        /// The user service
+        /// </summary>
+        [Inject]
+        public IUserService? UserService { get; set; }
+        /// <summary>
         /// Session storage container.
         /// </summary>
         [Inject]
@@ -26,6 +31,8 @@ namespace WebApp.Client.Pages
         /// The login data that will be used to for authentication.
         /// </summary>
         private UserLoginDto _userLoginDto = new();
+        /* TMP - DELETE*/
+        private List<UserDetailsDto>? _userLoginDtos = null;
         /// <summary>
         /// Attempts to login and retrieve the bearer token.
         /// </summary>
@@ -38,6 +45,18 @@ namespace WebApp.Client.Pages
                 {
                     this._bearerToken = await LoginService.GetBearer(LoginEndpoint, this._userLoginDto);
                     await sessionStorage.SetItemAsync("bearerToken", this._bearerToken);
+                }
+            }
+        }
+
+        protected async Task ListUsers()
+        {
+            if (UserService != null)
+            {
+                if (sessionStorage != null)
+                {
+                    this._bearerToken = await sessionStorage.GetItemAsync<string>("bearerToken");
+                    this._userLoginDtos = await UserService.GetUsers(GetAllUsersEndpoint, this._bearerToken);
                 }
             }
         }
