@@ -2,7 +2,7 @@ using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components;
 using WebApp.Client.Services;
 using WebApp.Shared.Dto;
-using static WebApp.Client.Common.ClientConstants;
+using static WebApp.Shared.CommonConstants;
 
 namespace WebApp.Client.Pages
 {
