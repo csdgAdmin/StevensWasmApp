@@ -5,7 +5,7 @@ using WebApp.Client.Services;
 using static WebApp.Shared.CommonConstants;
 using Microsoft.Extensions.Http;
 using Microsoft.Extensions.DependencyInjection;
-
+using MudBlazor.Services;
 using Blazored.SessionStorage;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -23,5 +23,6 @@ builder.Services.AddHttpClient<IUserService, UserService>(client => {
 });
 
 builder.Services.AddBlazoredSessionStorageAsSingleton();
+builder.Services.AddMudServices();
 
 await builder.Build().RunAsync();
