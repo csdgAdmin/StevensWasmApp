@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Json;
-using WebApp.Server.MockDB;
 using WebApp.Server.Models;
 using WebApp.Shared;
 using WebApp.Shared.Dto;
-using System.IO;
 
 namespace WebApp.Server.Controllers;
 
@@ -57,7 +53,8 @@ public class LoginController : ControllerBase
     {
         SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(_config["JwtSettings:Key"]!));
         SigningCredentials credeintials = new(securityKey, SecurityAlgorithms.HmacSha256);
-        List<Claim> claims = new() {
+        //List<Claim> claims = new() {
+        Claim[] claims = new Claim[] {
             new(ClaimTypes.NameIdentifier, user.UserName),
             new(ClaimTypes.Email, user.EmailAddress),
             new(ClaimTypes.GivenName, user.FirstName),
@@ -67,7 +64,7 @@ public class LoginController : ControllerBase
         JwtSecurityToken token = new(_config["JwtSettings:Issuer"],
                                      _config["JwtSettings:Audience"],
                                      claims,
-                                     expires: DateTime.Now.AddMinutes(10),
+                                     expires: DateTime.Now.AddMinutes(15),
                                      signingCredentials: credeintials);
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
@@ -80,7 +77,7 @@ public class LoginController : ControllerBase
     private UserModel? Authenticate(UserLoginDto loginDto)
     {
         ObjBuilder objBuilder = new();
-        List<UserModel>? userCollection = objBuilder.BuildObjFromJsonFile<List<UserModel>?>($"{Directory.GetCurrentDirectory()}{UserConstants.MockUserFilePath}");
+        List<UserModel>? userCollection = objBuilder.BuildObjFromJsonFile<List<UserModel>?>($"{Directory.GetCurrentDirectory()}{CommonConstants.MockUserFilePath}");
         if(userCollection != null)
         {
             return userCollection.FirstOrDefault(user =>

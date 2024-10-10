@@ -21,13 +21,16 @@ public class MediaModel
     /// Specifies the type of media. Ideally, this will be sourced from a prepopulated list.
     /// </summary>
     public string Type { get; set; } = string.Empty;
-
+    /// <summary>
+    /// Specifies the location of the image file associated with this media.
+    /// </summary>
+    public string Image { get; set; } = string.Empty;
+    /// <summary>
+    /// Specifies the location of the data file associated with this media.
+    /// </summary>
+    public string DataFile { get; set; } = string.Empty;
     /// <summary>
     /// The metadata related to the song. Initially null.
     /// </summary>
-    public MediaMetaDataModel? SongMetaData { get; set; } = null;
-    /// <summary>
-    /// Nullable reference to the content related to this media
-    /// </summary>
-    public byte[]? Data { get; set; } = null;
+    public MediaMetaDataModel? MetaData { get; set; } = null;
 }

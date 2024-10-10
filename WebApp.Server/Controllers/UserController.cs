@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
-using WebApp.Server.MockDB;
 using WebApp.Server.Models;
 using WebApp.Shared;
 using WebApp.Shared.Dto;
@@ -18,23 +15,39 @@ public class UserController : ControllerBase
     /// Get details about the current user's identity.
     /// </summary>
     /// <returns>An object containing details about the current user's identity.</returns>
-    [HttpGet("GetMyUserDetails")]
-    [Authorize(Roles = "Administrator")]
-    public UserDetailsDto? GetUserDetails()
+    [AllowAnonymous]
+    [HttpGet("GetUser/{userName}")]
+    public UserDetailsDto? GetUserDetails(string userName)
     {
-        UserModel? user = GetCurrentUser();
-        /*ToDo: Use the mapper*/
-        if(user != null)
+        UserModel? userModel = new();
+
+        if (string.IsNullOrWhiteSpace(userName))
+        {
+            userModel = GetCurrentUser();
+        }
+        else
+        {
+            ObjBuilder objBuilder = new();
+            List<UserModel>? userModels = objBuilder.BuildObjFromJsonFile<List<UserModel>?>($"{Directory.GetCurrentDirectory()}{CommonConstants.MockUserFilePath}");
+            if (userModels != null && userModels.Count > 0)
+            {
+                userModel = userModels.Find(selectedUser => selectedUser.UserName.ToUpper() == userName.ToUpper());
+            }
+        }
+
+
+        if (userModel != null)
         {
             return new()
             {
-                UserName = user.UserName,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                EmailAddress = user.EmailAddress,
-                Role = user.Role
+                UserName = userModel.UserName,
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                EmailAddress = userModel.EmailAddress,
+                Role = userModel.Role
             };
         }
+
         return null;
     }
 
@@ -42,18 +55,19 @@ public class UserController : ControllerBase
     /// Get a collection of user details for all users.
     /// </summary>
     /// <returns>A list containing details about the all user identity.</returns>
-    [Authorize(Roles = "Administrator")]
+    [AllowAnonymous]
     [HttpGet("GetAllUsers")]
     public List<UserDetailsDto>? GetAllUsers()
     {
         ObjBuilder objBuilder = new();
-        List<UserModel>? userModels = objBuilder.BuildObjFromJsonFile<List<UserModel>?>($"{Directory.GetCurrentDirectory()}{UserConstants.MockUserFilePath}");
-        if(userModels != null && userModels.Count > 0)
+        List<UserModel>? userModels = objBuilder.BuildObjFromJsonFile<List<UserModel>?>($"{Directory.GetCurrentDirectory()}{CommonConstants.MockUserFilePath}");
+        if (userModels != null && userModels.Count > 0)
         {
             List<UserDetailsDto>? userDetailDtos = new();
             foreach (UserModel userModel in userModels)
             {
-                userDetailDtos.Add(new() {
+                userDetailDtos.Add(new()
+                {
                     FirstName = userModel.FirstName,
                     LastName = userModel.LastName,
                     UserName = userModel.UserName,
@@ -62,6 +76,68 @@ public class UserController : ControllerBase
                 });
             }
             return userDetailDtos;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Get details about media that relates to the given title.
+    /// </summary>
+    /// <returns>A collection of objects that match the title provided.</returns>
+    [AllowAnonymous]
+    [HttpGet("GetMedia/Title/{title}")]
+    public List<MediaDetailsDto>? GetMediaByTitle(string title)
+    {
+        List<MediaDetailsDto>? mediaDetailDtos = new();
+
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            return null;
+        }
+        else
+        {
+            ObjBuilder objBuilder = new();
+            List<MediaModel>? mediaModels = objBuilder.BuildObjFromJsonFile<List<MediaModel>?>($"{Directory.GetCurrentDirectory()}{CommonConstants.MockMediaFilePath}");
+            if (mediaModels != null && mediaModels.Count > 0)
+            {
+                foreach(MediaModel mediaModel in mediaModels)
+                {
+                    if(mediaModel.Title == title)
+                    {
+                        mediaDetailDtos.Add(new() {
+                            Title = mediaModel.Title,
+                            Description = mediaModel.Description
+                        });
+
+                    }
+                }
+                return mediaDetailDtos;
+            }
+        }
+        return null;
+    }
+    /// <summary>
+    /// Get a collection of all media.
+    /// </summary>
+    /// <returns>A list containing details about the all media.</returns>
+    [AllowAnonymous]
+    [HttpGet("GetAllMedia")]
+    public List<MediaDetailsDto>? GetAllMedia()
+    {
+        ObjBuilder objBuilder = new();
+        List<MediaModel>? mediaModels = objBuilder.BuildObjFromJsonFile<List<MediaModel>?>($"{Directory.GetCurrentDirectory()}{CommonConstants.MockMediaFilePath}");
+        if (mediaModels != null && mediaModels.Count > 0)
+        {
+            List<MediaDetailsDto>? mediaDetailsDtos = new();
+            foreach (MediaModel mediaModel in mediaModels)
+            {
+                mediaDetailsDtos.Add(new()
+                {
+                    Title = mediaModel.Title,
+                    Description = mediaModel.Description
+                });
+            }
+            return mediaDetailsDtos;
         }
         return null;
     }

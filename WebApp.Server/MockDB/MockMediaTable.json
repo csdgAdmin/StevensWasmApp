@@ -1,0 +1,80 @@
+[
+  {
+    "Title": "Song One",
+    "Description": "The first song",
+    "Type": "Audio",
+    "Image": "songImageOne.png",
+    "DataFile": "songFileOne.mp3",
+    "MetaData": {
+      "ReleaseDate": "2001-01-01",
+      "AdditionDate": "2001-01-01",
+      "ArtistName": "Song Artist One",
+      "Rating": 1
+    }
+  },
+  {
+    "Title": "Song Two",
+    "Description": "The second song",
+    "Type": "Audio",
+    "Image": "songImageTwo.png",
+    "DataFile": "songFileTwo.mp3",
+    "MetaData": {
+      "ReleaseDate": "2002-02-02",
+      "AdditionDate": "2002-02-02",
+      "ArtistName": "Song Artist Two",
+      "Rating": 1
+    }
+  },
+  {
+    "Title": "Song Three",
+    "Description": "The third song",
+    "Type": "Audio",
+    "Image": "songImageThree.png",
+    "DataFile": "songFileThree.mp3",
+    "MetaData": {
+      "ReleaseDate": "2003-03-03",
+      "AdditionDate": "2003-03-03",
+      "ArtistName": "Song Artist Three",
+      "Rating": 1
+    }
+  },
+  {
+    "Title": "video One",
+    "Description": "The first video",
+    "Type": "Audio",
+    "Image": "videoImageOne.png",
+    "DataFile": "videoFileOne.mp3",
+    "MetaData": {
+      "ReleaseDate": "2001-01-01",
+      "AdditionDate": "2001-01-01",
+      "ArtistName": "Video Artist One",
+      "Rating": 1
+    }
+  },
+  {
+    "Title": "video Two",
+    "Description": "The second video",
+    "Type": "Audio",
+    "Image": "videoImageTwo.png",
+    "DataFile": "videoFileTwo.mp3",
+    "MetaData": {
+      "ReleaseDate": "2002-02-02",
+      "AdditionDate": "2002-02-02",
+      "ArtistName": "Video Artist Two",
+      "Rating": 1
+    }
+  },
+  {
+    "Title": "video Three",
+    "Description": "The third video",
+    "Type": "Audio",
+    "Image": "videoImageThree.png",
+    "DataFile": "videoFileThree.mp3",
+    "MetaData": {
+      "ReleaseDate": "2003-03-03",
+      "AdditionDate": "2003-03-03",
+      "ArtistName": "Video Artist Three",
+      "Rating": 1
+    }
+  }
+]
