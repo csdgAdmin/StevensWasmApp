@@ -1,14 +1,9 @@
+using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using WebApp.Client;
 using WebApp.Client.Services;
 using static WebApp.Shared.CommonConstants;
-using Microsoft.Extensions.Http;
-using Microsoft.Extensions.DependencyInjection;
-using MudBlazor.Services;
-using Blazored.SessionStorage;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -23,6 +18,5 @@ builder.Services.AddHttpClient<IUserService, UserService>(client => {
 });
 
 builder.Services.AddBlazoredSessionStorageAsSingleton();
-builder.Services.AddMudServices();
 
 await builder.Build().RunAsync();
